@@ -84,24 +84,15 @@ int main(int argc, char const *argv[])
 					scanf("%d", &excn);
 					for (int j = 0; j < excn; j ++)
 						scanf("%d", &excs[j]);
-					memset(cmd, '\0', sizeof(cmd));
 				}
-				if (!strcmp(cmd, "-z")) {
-					scanf("%d %d", &l, &r);
-					memset(cmd, '\0', sizeof(cmd));
-				}
-				if (!strcmp(cmd, "-s")) {
-					isSingle = true;
-					memset(cmd, '\0', sizeof(cmd));
-				}
-				if (!strcmp(cmd, "-r")){
-					isRing = true;
-					memset(cmd, '\0', sizeof(cmd));
-				}
+				else if (!strcmp(cmd, "-z"))	scanf("%d%d", &l, &r);
+				else if (!strcmp(cmd, "-s"))	isSingle = true;
+				else if (!strcmp(cmd, "-r"))	isRing = true;
+				memset(cmd, '\0', sizeof(cmd));
 				i = -1;
+				if (t == '\n')	break;
 				continue;
 			}
-			if (t == '\n')	break;
 			cmd[i] = t;
 		}
 	} else {
@@ -116,10 +107,8 @@ int main(int argc, char const *argv[])
 				sscanf(argv[++i], "%d", &l);
 				sscanf(argv[++i], "%d", &r);
 			}
-			if (!strcmp(argv[i], "-s"))
-				isSingle = true;
-			if (!strcmp(argv[i], "-r"))
-				isRing = true;
+			else if (!strcmp(argv[i], "-s"))	isSingle = true;
+			else if (!strcmp(argv[i], "-r"))	isRing = true;
 		}
 	}
 	status = generate(n, l, r, excn, excs, nums);
@@ -144,14 +133,11 @@ int main(int argc, char const *argv[])
 	}
 	std::sort(nums, nums + n);
 	for (int i = 0; i < n; i ++) {
+		if (isSingle == true)	getch();
 		printf("%d ", nums[i]);
-		if (isSingle == true) {
-			getch();
-			if (isRing == true)	printf("\7");
-		}
+		if (isSingle == true && isRing == true)	printf("\7");
 	}
 	printf("\nPress any key to continue...");
 	getch();
 	return 0;
 }
-
