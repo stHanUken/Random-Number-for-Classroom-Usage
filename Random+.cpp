@@ -75,22 +75,22 @@ int main(int argc, char const *argv[])
 		scanf("%d", &n);
 		for (int i = 0; ; i ++) {
 			t = getchar();
-			if (t == ' ' && i == 0) {
+			if ((t == ' ') && i == 0) {
 				i --;
 				continue;
 			}
-			if ((t == ' ' || t == '\n') && i != 0) {
-				if (!strcmp(cmd, "-e")) {
+			if ((t == ' ' && i != 0) || t == '\n') {
+				if (strcmp(cmd, "-e") == 0 || strcmp(cmd, "/e") == 0) {
 					scanf("%d", &excn);
 					for (int j = 0; j < excn; j ++)
 						scanf("%d", &excs[j]);
 				}
-				else if (!strcmp(cmd, "-z"))	scanf("%d%d", &l, &r);
-				else if (!strcmp(cmd, "-s"))	isSingle = true;
-				else if (!strcmp(cmd, "-r"))	isRing = true;
+				else if (strcmp(cmd, "-z") == 0 || strcmp(cmd, "/z") == 0)	scanf("%d%d", &l, &r);
+				else if (strcmp(cmd, "-s") == 0 || strcmp(cmd, "/s") == 0)	isSingle = true;
+				else if (strcmp(cmd, "-r") == 0 || strcmp(cmd, "/r") == 0)	isRing = true;
 				memset(cmd, '\0', sizeof(cmd));
-				i = -1;
 				if (t == '\n')	break;
+				i = -1;
 				continue;
 			}
 			cmd[i] = t;
@@ -98,17 +98,17 @@ int main(int argc, char const *argv[])
 	} else {
 		sscanf(argv[1], "%d", &n);
 		for (int i = 2; i < argc; i ++) {
-			if (!strcmp(argv[i], "-e")) {
+			if (strcmp(argv[i], "-e") == 0 || strcmp(argv[i], "/e") == 0) {
 				sscanf(argv[++i], "%d", &excn);
 				for (int j = 0; j < excn; j ++)
 					sscanf(argv[++i], "%d", &excs[j]);
 			}
-			if (!strcmp(argv[i], "-z")) {
+			if (strcmp(argv[i], "-z") == 0 || strcmp(argv[i], "/z") == 0) {
 				sscanf(argv[++i], "%d", &l);
 				sscanf(argv[++i], "%d", &r);
 			}
-			else if (!strcmp(argv[i], "-s"))	isSingle = true;
-			else if (!strcmp(argv[i], "-r"))	isRing = true;
+			else if (strcmp(argv[i], "-s") == 0 || strcmp(argv[i], "/s") == 0)	isSingle = true;
+			else if (strcmp(argv[i], "-r") == 0 || strcmp(argv[i], "/r") == 0)	isRing = true;
 		}
 	}
 	status = generate(n, l, r, excn, excs, nums);
